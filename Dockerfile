@@ -12,7 +12,8 @@ RUN apk add --no-cache --virtual microwindows-build-dependencies \
     freetype-dev \
     libx11-dev \
     libxext-dev \
-    libxinerama-dev
+    libxinerama-dev \
+    openjdk11-jre
 
 ENV MW_REVISION master
 RUN git clone --depth 1 --branch ${MW_REVISION} https://github.com/ghaerr/microwindows.git /microwindows
