@@ -3,14 +3,16 @@ FROM alpine as build
 RUN apk add --no-cache --virtual microwindows-build-dependencies \
     git \
     build-base \
+    doxygen \
+    graphviz \
     bison \
+    linux-headers \
     flex-dev \
-    libx11-dev \
     libpng-dev \
     freetype-dev \
+    libx11-dev \
     libxext-dev \
-    libxinerama-dev \
-    linux-headers
+    libxinerama-dev
 
 ENV MW_REVISION master
 RUN git clone --depth 1 --branch ${MW_REVISION} https://github.com/ghaerr/microwindows.git /microwindows
@@ -23,4 +25,5 @@ RUN cp Configs/config.linux-X11 config
 RUN echo "#define PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP {{PTHREAD_MUTEX_RECURSIVE}}" | cat - /microwindows/src/nanox/client.c > /microwindows/src/nanox/client.c.new && mv /microwindows/src/nanox/client.c.new /microwindows/src/nanox/client.c
 
 RUN make
+RUN make doc
 
